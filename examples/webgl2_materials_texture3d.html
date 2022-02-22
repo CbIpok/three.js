@@ -30,7 +30,7 @@
 
 		import { GUI } from './jsm/libs/lil-gui.module.min.js';
 		import { OrbitControls } from './jsm/controls/OrbitControls.js';
-		import { NRRDLoader } from './jsm/loaders/NRRDLoader.js';
+		import { NRRDLoader } from './jsm/loaders/LizikLoader.js';
 		import { VolumeRenderShader1 } from './jsm/shaders/VolumeShader.js';
 		import WebGL from './jsm/capabilities/WebGL.js';
 
@@ -82,16 +82,16 @@
 			// let dirLight = new DirectionalLight( 0xffffff );
 
 			// The gui for interaction
-			volconfig = { clim1: 0, clim2: 1, renderstyle: 'iso', isothreshold: 0.15, colormap: 'viridis' };
+			volconfig = { clim1: 0, clim2: 1, renderstyle: 'iso', isothreshold: 10000000, colormap: 'viridis' };
 			const gui = new GUI();
-			gui.add( volconfig, 'clim1', 0, 1, 0.01 ).onChange( updateUniforms );
-			gui.add( volconfig, 'clim2', 0, 1, 0.01 ).onChange( updateUniforms );
+			gui.add( volconfig, 'clim1', 100000, 100000000000, 100000 ).onChange( updateUniforms );
+			gui.add( volconfig, 'clim2', 0, 100000000000, 100000 ).onChange( updateUniforms );
 			gui.add( volconfig, 'colormap', { gray: 'gray', viridis: 'viridis' } ).onChange( updateUniforms );
 			gui.add( volconfig, 'renderstyle', { mip: 'mip', iso: 'iso' } ).onChange( updateUniforms );
-			gui.add( volconfig, 'isothreshold', 0, 1, 0.01 ).onChange( updateUniforms );
+			gui.add( volconfig, 'isothreshold', 1000000, 100000000, 1000000 ).onChange( updateUniforms );
 
 			// Load the data ...
-			new NRRDLoader().load( 'models/nrrd/stent.nrrd', function ( volume ) {
+			new NRRDLoader().load( 'models/nrrd/138_3D.txt', function ( volume ) {
 
 				// Texture to hold the volume. We have scalars, so we put our data in the red channel.
 				// THREEJS will select R32F (33326) based on the THREE.RedFormat and THREE.FloatType.
