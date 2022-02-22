@@ -61,13 +61,13 @@ class LizikLoader extends Loader {
 
 
 
-		volume.xLength = 32
+		volume.xLength = 256
 		volume.yLength = 256
-		volume.zLength = 256
+		volume.zLength = 32
 
 		var foo = new Float32Array(32*256*256);
 
-		
+
 
 		let bytes = new Uint8Array(data)
 		for (var i = 0; i < 32*256*256; i++) {

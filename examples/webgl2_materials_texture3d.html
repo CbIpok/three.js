@@ -83,13 +83,13 @@
 			// let dirLight = new DirectionalLight( 0xffffff );
 
 			// The gui for interaction
-			volconfig = { clim1: 0, clim2: 1, renderstyle: 'iso', isothreshold: 10000000, colormap: 'viridis' };
+			volconfig = { clim1: 0, clim2: 1, renderstyle: 'iso', isothreshold: 39000000, colormap: 'viridis' };
 			const gui = new GUI();
 			gui.add( volconfig, 'clim1', 100000, 100000000000, 100000 ).onChange( updateUniforms );
 			gui.add( volconfig, 'clim2', 0, 100000000000, 100000 ).onChange( updateUniforms );
 			gui.add( volconfig, 'colormap', { gray: 'gray', viridis: 'viridis' } ).onChange( updateUniforms );
 			gui.add( volconfig, 'renderstyle', { mip: 'mip', iso: 'iso' } ).onChange( updateUniforms );
-			gui.add( volconfig, 'isothreshold', 1000000, 100000000, 1000000 ).onChange( updateUniforms );
+			gui.add( volconfig, 'isothreshold', 39000000, 369000000, 1000000 ).onChange( updateUniforms );
 
 			// Load the data ...
 			new LizikLoader().load( 'models/nrrd/138_3D.txt', function ( volume ) {
@@ -121,7 +121,7 @@
 				const uniforms = THREE.UniformsUtils.clone( shader.uniforms );
 
 				uniforms[ 'u_data' ].value = texture;
-				uniforms[ 'u_size' ].value.set( volume.xLength, volume.yLength, volume.zLength );
+				uniforms[ 'u_size' ].value.set( volume.xLength, volume.yLength, volume.zLength*10 );
 				uniforms[ 'u_clim' ].value.set( volconfig.clim1, volconfig.clim2 );
 				uniforms[ 'u_renderstyle' ].value = volconfig.renderstyle == 'mip' ? 0 : 1; // 0: MIP, 1: ISO
 				uniforms[ 'u_renderthreshold' ].value = volconfig.isothreshold; // For ISO renderstyle
@@ -135,8 +135,8 @@
 				} );
 
 				// THREE.Mesh
-				const geometry = new THREE.BoxGeometry( volume.xLength, volume.yLength, volume.zLength );
-				geometry.translate( volume.xLength / 2 - 0.5, volume.yLength / 2 - 0.5, volume.zLength / 2 - 0.5 );
+				const geometry = new THREE.BoxGeometry( volume.xLength*2, volume.yLength*2, volume.zLength*2 );
+				geometry.translate( volume.xLength  - 3, volume.yLength  - 3, volume.zLength  - 3 );
 
 				const mesh = new THREE.Mesh( geometry, material );
 				scene.add( mesh );
