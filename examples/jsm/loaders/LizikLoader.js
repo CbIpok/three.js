@@ -7,7 +7,7 @@ import {
 import * as fflate from '../libs/fflate.module.js';
 import { Volume } from '../misc/Volume.js';
 
-class NRRDLoader extends Loader {
+class LizikLoader extends Loader {
 
 	constructor( manager ) {
 
@@ -65,11 +65,9 @@ class NRRDLoader extends Loader {
 		volume.yLength = 256
 		volume.zLength = 256
 
-		var foo = [];
+		var foo = new Float32Array(32*256*256);
 
-		for (var i = 0; i < 32*256*256; i++) {
-			foo.push(1);
-		}
+		
 
 		let bytes = new Uint8Array(data)
 		for (var i = 0; i < 32*256*256; i++) {
@@ -294,4 +292,4 @@ const _fieldFunctions = {
 
 };
 
-export { NRRDLoader };
+export { LizikLoader };
